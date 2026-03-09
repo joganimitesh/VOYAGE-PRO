@@ -1,5 +1,5 @@
 # Stage 1: Build the React Application
-FROM node:18-alpine as build
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
@@ -18,11 +18,15 @@ RUN npm run build
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
+# Remove the default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
+
 # Copy the build output to replace the default nginx contents
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy our custom Nginx config to handle React Router
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy our nginx template — the official nginx image auto-runs envsubst on
+# files in /etc/nginx/templates/, replacing ${PORT} at container startup
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 80
 
