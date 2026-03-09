@@ -5,20 +5,24 @@ import axios from "axios";
 // ✅ Utility: Normalize trailing slashes in URLs
 const normalizeBaseUrl = (url) => url.replace(/\/+$/, "");
 
-// ✅ Exported base URL for global use
-// Vite bakes VITE_API_BASE_URL into the build if provided.
-// In production (Vercel/Render), it should be your backend URL.
-const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+const getBaseUrl = () => {
+  // 1. Priority: Environment Variable
+  if (import.meta.env.VITE_API_BASE_URL) return import.meta.env.VITE_API_BASE_URL;
 
-// ✅ Fallback logic: 
-// 1. If VITE_API_BASE_URL is set, use it.
-// 2. If we are in production and it's missing, use "" (assumes same-origin or Nginx proxy).
-// 3. In development, default to localhost:5001.
-export const BASE_URL = normalizeBaseUrl(
-  rawBaseUrl || (import.meta.env.PROD ? "" : "http://localhost:5001")
-);
+  // 2. Fallback: Check if we are on localhost
+  const isLocal = window.location.hostname === "localhost" || 
+                  window.location.hostname === "127.0.0.1" || 
+                  window.location.hostname.startsWith("192.168.");
+  
+  if (isLocal) return "http://localhost:5001";
 
-console.log(`[Voyage Pro] Using API Base URL: ${BASE_URL || "(current domain)"}`);
+  // 3. Final Fallback: Production Render URL
+  return "https://voyage-pro-4.onrender.com";
+};
+
+export const BASE_URL = normalizeBaseUrl(getBaseUrl());
+
+console.log(`[Voyage Pro] API Path: ${BASE_URL}/api`);
 
 // ✅ Create a pre-configured Axios instance
 const apiClient = axios.create({
