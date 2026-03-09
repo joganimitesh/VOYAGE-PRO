@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import apiClient from '../api/apiClient';
+import { getImageUrl } from '../utils/helpers';
 import { toast } from 'react-hot-toast';
 
 const ItineraryBuilder = () => {
@@ -121,7 +122,7 @@ const ItineraryBuilder = () => {
                                                     className="p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 cursor-grab flex items-center justify-between"
                                                 >
                                                     <div className="flex items-center gap-3">
-                                                        <img src={`http://localhost:5001/${item.image}`} alt="" className="w-12 h-12 object-cover rounded-md" />
+                                                        <img src={getImageUrl(item.image)} alt="" className="w-12 h-12 object-cover rounded-md" />
                                                         <div>
                                                             <h4 className="font-bold text-sm">{item.name}</h4>
                                                             <p className="text-xs text-secondary">{item.duration}</p>

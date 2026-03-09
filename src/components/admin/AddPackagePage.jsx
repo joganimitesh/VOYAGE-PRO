@@ -5,6 +5,7 @@ import apiClient, { BASE_URL } from "../../api/apiClient";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
+import { getImageUrl } from "../../utils/helpers";
 
 // ✅ Category options
 const categoryOptions = [
@@ -58,7 +59,7 @@ const AddPackagePage = () => {
             isActive: pkg.isActive !== undefined ? pkg.isActive : true,
             highlights: (pkg.highlights || []).join(", "),
           });
-          setImagePreview(`${BASE_URL}/${pkg.image}`);
+          setImagePreview(getImageUrl(pkg.image));
         })
         .catch((err) => {
           console.error("Failed to fetch package", err);

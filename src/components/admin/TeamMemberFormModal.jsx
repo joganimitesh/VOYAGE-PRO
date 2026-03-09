@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Upload } from "lucide-react";
 import InputField from "../ui/InputField";
 import Button from "../ui/Button";
-import { BASE_URL } from "../../api/apiClient";
+import { getImageUrl } from "../../utils/helpers";
 
 const TeamMemberFormModal = ({ isOpen, onClose, onSave, memberToEdit }) => {
   const [formData, setFormData] = useState({
@@ -26,11 +26,7 @@ const TeamMemberFormModal = ({ isOpen, onClose, onSave, memberToEdit }) => {
           imageFile: null,
         });
         setImagePreview(
-          memberToEdit.image
-            ? memberToEdit.image.startsWith("http")
-              ? memberToEdit.image
-              : `${BASE_URL}/${memberToEdit.image}`
-            : null
+          memberToEdit.image ? getImageUrl(memberToEdit.image) : null
         );
       } else {
         setFormData({ name: "", title: "", imageFile: null });

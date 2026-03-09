@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./voyage-backend
+      dockerfile: Dockerfile
+    container_name: voyage-backend
+    ports:
+      - "5001:5001"
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      # Note: MONGO_URI is picked up from voyage-backend/.env
+    env_file:
+      - ./voyage-backend/.env
+    volumes:
+      # Persist uploaded files on the host machine
+      - ./voyage-backend/uploads:/app/uploads
+
+  frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: voyage-frontend
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - backend

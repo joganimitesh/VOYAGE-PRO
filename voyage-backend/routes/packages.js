@@ -4,21 +4,12 @@ const router = express.Router();
 const adminAuth = require("../middleware/adminAuth"); // ✅ Make sure this is imported
 const Package = require("../models/Package");
 const Client = require("../models/Client"); // ✅ Added Client model
+const { storage } = require("../config/cloudinary"); // ✅ Import Cloudinary Storage
 const multer = require("multer");
-const path = require("path");
 
 /* ======================================================
 📁 Multer Configuration
 ====================================================== */
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "..", "uploads"));
-  },
-  filename: function (req, file, cb) {
-    cb(null, `package-${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
-
 const upload = multer({ storage }).single("image");
 
 /* ======================================================
@@ -115,7 +106,7 @@ router.post("/", adminAuth, upload, async (req, res) => {
         .json({ success: false, message: "Image upload is required." });
     }
 
-    const imagePath = `uploads/${req.file.filename}`;
+    const imagePath = req.file.path; // ✅ Cloudinary URL instead of local path
 
     const newPackage = new Package({
       name,
@@ -148,7 +139,7 @@ router.patch("/:id", adminAuth, upload, async (req, res) => {
     delete updateData.rating; // ✅ Prevent manual rating updates
 
     if (req.file) {
-      updateData.image = `uploads/${req.file.filename}`;
+      updateData.image = req.file.path; // ✅ Cloudinary URL
     }
 
     if (updateData.highlights && typeof updateData.highlights === "string") {

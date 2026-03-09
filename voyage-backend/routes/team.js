@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const adminAuth = require("../middleware/adminAuth");
 const TeamMember = require("../models/TeamMember");
+const { storage } = require("../config/cloudinary");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
@@ -11,18 +12,6 @@ const fs = require("fs");
 /* ======================================================
 ⚙️ MULTER STORAGE SETUP FOR TEAM IMAGES
 ====================================================== */
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // ✅ FIX: Use correct path
-    const uploadPath = path.join(__dirname, "..", "uploads");
-    if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
-    cb(null, uploadPath);
-  },
-  filename: function (req, file, cb) {
-    cb(null, "team-" + Date.now() + path.extname(file.originalname));
-  },
-});
-
 // ✅ FIX: The modal sends the file as 'imageFile'
 const upload = multer({ storage }).single("imageFile");
 
@@ -49,7 +38,7 @@ POST /api/team/add
 router.post("/add", adminAuth, upload, async (req, res) => {
   try {
     const { name, title } = req.body;
-    const imagePath = req.file ? `uploads/${req.file.filename}` : "";
+    const imagePath = req.file ? req.file.path : "";
 
     if (!name || !title || !imagePath) {
       return res.status(400).json({
@@ -81,7 +70,7 @@ PATCH /api/team/update/:id
 router.patch("/update/:id", adminAuth, upload, async (req, res) => {
   try {
     const updateData = { ...req.body };
-    if (req.file) updateData.image = `uploads/${req.file.filename}`;
+    if (req.file) updateData.image = req.file.path;
 
     const updatedMember = await TeamMember.findByIdAndUpdate(
       req.params.id,
@@ -121,11 +110,8 @@ router.delete("/:id", adminAuth, async (req, res) => {
         .json({ success: false, message: "Team member not found." });
     }
 
-    // Delete old image if it exists
-    const imagePath = path.join(__dirname, "..", member.image);
-    if (member.image && fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-    }
+    // Delete old image if it exists - removed for Cloudinary, manual cleanup needed or Cloudinary API call
+    console.log("Team Member Deleted:", member._id);
 
     res.json({
       success: true,

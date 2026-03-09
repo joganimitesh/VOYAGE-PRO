@@ -12,8 +12,8 @@ import {
   Compass,
 } from "lucide-react";
 import { formatRupee } from "../../utils/format";
-import apiClient, { BASE_URL } from "../../api/apiClient";
-import { cn } from "../../utils/helpers";
+import apiClient from "../../api/apiClient";
+import { cn, getImageUrl } from "../../utils/helpers";
 
 const AboutPage = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -184,7 +184,7 @@ const AboutPage = () => {
             >
               <div className="relative overflow-hidden rounded-2xl shadow-lg">
                 <img
-                  src={`${BASE_URL}/${member.image}`}
+                  src={getImageUrl(member.image)}
                   alt={member.name}
                   className="w-full h-80 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
                 />

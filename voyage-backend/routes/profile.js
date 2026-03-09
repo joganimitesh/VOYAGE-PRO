@@ -6,23 +6,12 @@ const { checkBlocked } = require("../middleware/checkBlocked");
 const Client = require("../models/Client");
 const Package = require("../models/Package");
 const bcrypt = require("bcryptjs");
+const { storage } = require("../config/cloudinary");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
 const router = express.Router();
-
-// ... (Multer Storage Setup remains the same)
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, "..", "uploads");
-    if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `profile-${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
 
 const upload = multer({
   storage,
@@ -60,13 +49,8 @@ router.post("/update", auth, checkBlocked, upload, async (req, res) => {
       user.socialLinks.linkedin = socialLinks.linkedin || "";
     }
     if (req.file) {
-      if (user.profileImage && user.profileImage !== "uploads/default-avatar.png") {
-        const oldPath = path.join(__dirname, "..", user.profileImage);
-        if (fs.existsSync(oldPath)) {
-          fs.unlinkSync(oldPath);
-        }
-      }
-      user.profileImage = `uploads/${req.file.filename}`;
+      // Local unlink removed since it's Cloudinary now (ideally we'd delete from Claudinary API)
+      user.profileImage = req.file.path; // ✅ Cloudinary URL
     }
     const updatedUser = await user.save();
     const userResponse = updatedUser.toObject();

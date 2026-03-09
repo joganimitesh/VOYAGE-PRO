@@ -15,8 +15,8 @@ import {
   CreditCard,
   CarTaxiFront, // ✅ Added for Cab Feature
 } from "lucide-react";
-import { cn } from "../../utils/helpers";
-import apiClient, { BASE_URL } from "../../api/apiClient";
+import { cn, getImageUrl } from "../../utils/helpers";
+import apiClient from "../../api/apiClient";
 import { formatRupee } from "../../utils/format";
 
 // --- InvoiceModal ---
@@ -62,7 +62,7 @@ const InvoiceModal = ({ request, onClose }) => {
             <p>
               <strong>Document:</strong>{" "}
               <a
-                href={`${BASE_URL}/${request.documentPath}`}
+                href={getImageUrl(request.documentPath)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"

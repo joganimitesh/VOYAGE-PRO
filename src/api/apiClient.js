@@ -6,8 +6,9 @@ import axios from "axios";
 const normalizeBaseUrl = (url) => url.replace(/\/+$/, "");
 
 // ✅ Exported base URL for global use (e.g., image paths)
+// Use empty string in production (which delegates to Nginx proxy) or localhost in dev
 export const BASE_URL = normalizeBaseUrl(
-  import.meta.env.VITE_API_BASE_URL?.trim() || "http://localhost:5001"
+  import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.PROD ? "" : "http://localhost:5001")
 );
 
 // ✅ Create a pre-configured Axios instance

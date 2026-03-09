@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Edit, Trash2, Search } from "lucide-react";
-import apiClient, { BASE_URL } from "../../api/apiClient";
+import apiClient from "../../api/apiClient";
 import Button from "../ui/Button";
 import TeamMemberFormModal from "./TeamMemberFormModal";
-import { cn } from "../../utils/helpers";
+import { cn, getImageUrl } from "../../utils/helpers";
 
 // --- Team Member Card ---
 const AdminTeamMemberCard = ({ member, onEdit, onDelete }) => (
@@ -17,7 +17,7 @@ const AdminTeamMemberCard = ({ member, onEdit, onDelete }) => (
     <img
       src={
         member.image
-          ? `${BASE_URL}/${member.image}`
+          ? getImageUrl(member.image)
           : "https://i.pravatar.cc/150"
       }
       alt={member.name || "Team Member"}

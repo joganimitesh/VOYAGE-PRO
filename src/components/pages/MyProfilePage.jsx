@@ -392,7 +392,7 @@ const BookingsGrid = ({ bookings, navigate }) => {
         >
           {booking.packageImage ? (
             <img
-              src={`${BASE_URL}/${booking.packageImage}`}
+              src={getImageUrl(booking.packageImage)}
               alt={booking.packageName}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -467,7 +467,7 @@ const ContentGrid = ({
           className="relative aspect-square rounded-lg sm:rounded-xl overflow-hidden group"
         >
           <img
-            src={`${BASE_URL}/${pkg.image}`}
+            src={getImageUrl(pkg.image)}
             alt={pkg.name}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />

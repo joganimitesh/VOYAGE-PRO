@@ -24,7 +24,7 @@ import {
   CheckCircle, // ✅ Import Check Icon
 } from "lucide-react";
 import { formatRupee } from "../../utils/format";
-import { cn } from "../../utils/helpers";
+import { cn, getImageUrl } from "../../utils/helpers";
 import Button from "../ui/Button";
 
 // Helper component for stat boxes
@@ -297,7 +297,7 @@ const BookingDetailsPage = () => {
           <div className="space-y-6">
             <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border border-slate-100 dark:border-slate-700">
               <img
-                src={`${BASE_URL}/${booking.packageImage}`}
+                src={getImageUrl(booking.packageImage)}
                 alt={booking.packageName}
                 className="w-full h-48 object-cover rounded-md mb-6"
                 onError={(e) => { e.target.style.display = 'none'; }}
@@ -321,7 +321,7 @@ const BookingDetailsPage = () => {
                 This is the ID proof you uploaded during booking.
               </p>
               <a
-                href={`${BASE_URL}/${booking.documentPath}`}
+                href={getImageUrl(booking.documentPath)}
                 download
                 className={cn(
                   "px-8 py-3 font-semibold rounded-lg flex items-center justify-center gap-2 shadow-lg group transform transition-all duration-200 hover:-translate-y-0.5",

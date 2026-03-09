@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Marker, InfoWindow } from "@react-google-maps/api";
 import GoogleMapWrapper from "../GoogleMapWrapper";
 import axios from "axios";
+import { BASE_URL } from "../api/apiClient";
 import { Loader2, MapPin, Plus, Check, ShoppingBag, Search, ChevronDown, Minus, ArrowRight } from "lucide-react";
 import { toast } from "react-hot-toast";
 
@@ -36,7 +37,7 @@ const CustomPackagePage = () => {
             setLoading(true);
             try {
                 const res = await axios.get(
-                    `http://localhost:5001/api/places/state/${selectedState}`
+                    `${BASE_URL}/api/places/state/${selectedState}`
                 );
                 setPlaces(res.data);
 
