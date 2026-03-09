@@ -3,6 +3,10 @@ FROM node:18-alpine as build
 
 WORKDIR /app
 
+# Accept the backend URL as a build argument
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 # Copy package files and install dependencies
 COPY package*.json ./
 RUN npm install
@@ -17,12 +21,9 @@ FROM nginx:alpine
 # Copy the build output to replace the default nginx contents
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy our nginx template (will be processed by envsubst at runtime)
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+# Copy our custom Nginx config to handle React Router
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
-# Default backend URL (override via environment variable in Render/docker-compose)
-ENV BACKEND_URL=http://backend:5001
 
 CMD ["nginx", "-g", "daemon off;"]
