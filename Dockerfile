@@ -18,16 +18,16 @@ RUN npm run build
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
-# Remove the default nginx config
-RUN rm /etc/nginx/conf.d/default.conf
-
-# Copy the build output to replace the default nginx contents
+# Copy the build output
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy our nginx template — the official nginx image auto-runs envsubst on
-# files in /etc/nginx/templates/, replacing ${PORT} at container startup
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+# Copy nginx config (port 80 default, will be replaced by entrypoint)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy custom entrypoint that handles PORT substitution
+COPY docker-entrypoint.sh /docker-entrypoint-custom.sh
+RUN chmod +x /docker-entrypoint-custom.sh
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/docker-entrypoint-custom.sh"]
