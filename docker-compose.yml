@@ -22,7 +22,7 @@ services:
   frontend:
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: frontend.Dockerfile
     container_name: voyage-frontend
     ports:
       - "80:80"

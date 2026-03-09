@@ -5,11 +5,20 @@ import axios from "axios";
 // ✅ Utility: Normalize trailing slashes in URLs
 const normalizeBaseUrl = (url) => url.replace(/\/+$/, "");
 
-// ✅ Exported base URL for global use (e.g., image paths)
-// Use empty string in production (which delegates to Nginx proxy) or localhost in dev
+// ✅ Exported base URL for global use
+// Vite bakes VITE_API_BASE_URL into the build if provided.
+// In production (Vercel/Render), it should be your backend URL.
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+
+// ✅ Fallback logic: 
+// 1. If VITE_API_BASE_URL is set, use it.
+// 2. If we are in production and it's missing, use "" (assumes same-origin or Nginx proxy).
+// 3. In development, default to localhost:5001.
 export const BASE_URL = normalizeBaseUrl(
-  import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.PROD ? "" : "http://localhost:5001")
+  rawBaseUrl || (import.meta.env.PROD ? "" : "http://localhost:5001")
 );
+
+console.log(`[Voyage Pro] Using API Base URL: ${BASE_URL || "(current domain)"}`);
 
 // ✅ Create a pre-configured Axios instance
 const apiClient = axios.create({
