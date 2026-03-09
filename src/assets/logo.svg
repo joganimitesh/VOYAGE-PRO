@@ -1,0 +1,70 @@
+<svg width="600" height="600" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="gold-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="100%" stop-color="#EAB308" />
+    </linearGradient>
+  </defs>
+
+  <!-- --- Outer Compass Ring --- -->
+  <circle cx="300" cy="300" r="280" stroke="url(#gold-stroke)" stroke-width="2" opacity="0.4" />
+  <circle cx="300" cy="300" r="260" fill="url(#sky-grad)" stroke="url(#gold-stroke)" stroke-width="4" />
+  
+  <!-- Compass Points -->
+  <path d="M300 20 L315 60 L300 50 L285 60 Z" fill="url(#gold-stroke)" /> <!-- N -->
+  <path d="M300 580 L315 540 L300 550 L285 540 Z" fill="#CA8A04" /> <!-- S -->
+  <path d="M580 300 L540 315 L550 300 L540 285 Z" fill="url(#gold-stroke)" /> <!-- E -->
+  <path d="M20 300 L60 315 L50 300 L60 285 Z" fill="#CA8A04" /> <!-- W -->
+
+  <!-- --- Background Landscape --- -->
+  <!-- Mountains -->
+  <path d="M100 450 L200 320 L300 450 Z" fill="#5F9EA0" stroke="#0F172A" stroke-width="2" />
+  <path d="M250 450 L350 340 L450 450 Z" fill="#4A7678" stroke="#0F172A" stroke-width="2" />
+  <path d="M150 450 L300 310 L450 450 Z" fill="#729E9F" stroke="#0F172A" stroke-width="2" />
+  
+  <!-- Snow Caps -->
+  <path d="M185 340 L200 320 L215 340 L205 330 L195 335 Z" fill="white" />
+  <path d="M285 325 L300 310 L315 325 L305 320 L295 322 Z" fill="white" />
+  <path d="M335 355 L350 340 L365 355 L355 350 L345 352 Z" fill="white" />
+
+  <!-- The Road/Path -->
+  <path d="M300 560 Q 300 500 450 430 Q 520 400 540 350" stroke="white" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.8" />
+  <path d="M300 560 Q 300 500 450 430 Q 520 400 540 350" stroke="#F8FAFC" stroke-width="2" stroke-linecap="round" fill="none" />
+
+  <!-- --- Central Hot Air Balloon --- -->
+  <!-- Balloon Body -->
+  <path d="M220 280 A 100 130 0 1 1 380 280 Q 380 380 310 420 H 290 Q 220 380 220 280 Z" fill="white" stroke="#1E293B" stroke-width="3" />
+  
+  <!-- Stripes -->
+  <path d="M250 180 Q 300 160 350 180 Q 350 350 300 410 Q 250 350 250 180 Z" fill="#1E293B" opacity="0.1" />
+  <path d="M280 165 V 415" stroke="#1E293B" stroke-width="2" opacity="0.2" />
+  <path d="M320 165 V 415" stroke="#1E293B" stroke-width="2" opacity="0.2" />
+
+  <!-- Globe Inside Balloon -->
+  <circle cx="300" cy="270" r="45" fill="white" stroke="#1E293B" stroke-width="2" />
+  <circle cx="300" cy="270" r="40" fill="#E2E8F0" />
+  <path d="M280 250 Q 300 230 320 250 Q 300 270 280 290 Q 300 310 320 290" fill="#729E9F" opacity="0.6" />
+  <ellipse cx="300" cy="270" rx="15" ry="45" stroke="#1E293B" stroke-width="1" opacity="0.3" />
+  <line x1="255" y1="270" x2="345" y2="270" stroke="#1E293B" stroke-width="1" opacity="0.3" />
+
+  <!-- Balloon Basket -->
+  <rect x="285" y="425" width="30" height="25" rx="5" fill="#CA8A04" stroke="#1E293B" stroke-width="2" />
+  <line x1="285" y1="415" x2="285" y2="425" stroke="#1E293B" stroke-width="2" />
+  <line x1="315" y1="415" x2="315" y2="425" stroke="#1E293B" stroke-width="2" />
+
+  <!-- --- Extra Details --- -->
+  <!-- Airplane & Cloud -->
+  <path d="M480 320 Q 500 300 520 320" fill="white" stroke="#1E293B" stroke-width="1" />
+  <circle cx="500" cy="310" r="10" fill="white" />
+  <circle cx="485" cy="315" r="8" fill="white" />
+  <circle cx="515" cy="315" r="8" fill="white" />
+  
+  <g transform="translate(430, 370) rotate(-30)">
+    <path d="M0 0 L20 10 L0 20 L5 10 Z" fill="#FDE047" stroke="#1E293B" stroke-width="1" />
+  </g>
+  
+</svg>
