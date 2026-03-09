@@ -17,9 +17,12 @@ FROM nginx:alpine
 # Copy the build output to replace the default nginx contents
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy our custom Nginx config to handle React Router and API proxying
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy our nginx template (will be processed by envsubst at runtime)
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 80
+
+# Default backend URL (override via environment variable in Render/docker-compose)
+ENV BACKEND_URL=http://backend:5001
 
 CMD ["nginx", "-g", "daemon off;"]
